@@ -20,18 +20,9 @@ int knop8 = 0;
 
 int knopwaarde = 0;
 
-int Snelheid = 20;
+int Snelheid = 5; 
 
 void setup() {
-
-  pinMode(knop, INPUT);
-  pinMode(knop2, INPUT);
-  pinMode(knop3, INPUT);
-  pinMode(knop4, INPUT);
-  pinMode(knop5, INPUT);
-  pinMode(knop6, INPUT);
-  pinMode(knop7, INPUT);
-  pinMode(knop8, INPUT);
 
 
   Serial.begin(9600); // begin serial communication with a baud rate of 9600
@@ -81,79 +72,65 @@ void setup() {
   // Breng servo naar start positie [Code start hier]
   myservo.attach(13);  // attaches the servo on pin 9 to the servo object
 
-  if (pos < 111) {
-    for (pos; pos <= 112; pos += 1) { // goes from 0 degrees to 90 degrees
-      // in steps of 1 degree
-      myservo.write(pos);              // tell servo to go to position in variable 'pos'
-      delay(15);                       // waits 15ms for the servo to reach the position
-    }
-  }
-  if (pos > 113) {
-    for (pos; pos >= 112; pos -= 1) {
-      myservo.write(pos);
-      delay(15);
-    }
-  }
-  // Breng servo naar start positie [Code eindigd hier]
 }
 
 
 void loop() {
   //--------------------------------------------------------------------------------------------
   //QTR berekende waardes naar boolean veranderen
-  if (digitalRead(sensorValues[A0]) > 700) {
+  if (sensorValues[0] > 700) {
     knop = 1;
   }
-  else {
+  else if (sensorValues[0] < 700) {
     knop = 0;
   }
 
-  if (digitalRead(sensorValues[A1]) > 700) {
+  if (sensorValues[1] > 700) {
     knop2 = 1;
   }
-  else {
+  else if (sensorValues[1] < 700) {
     knop2 = 0;
   }
 
-  if (digitalRead(sensorValues[A2]) > 700) {
+  if (sensorValues[2] > 700) {
     knop3 = 1;
   }
-  else {
+  else if (sensorValues[2]< 700) {
     knop3 = 0;
   }
 
-  if (digitalRead(sensorValues[A3]) > 700) {
+  if (sensorValues[3] > 700) {
     knop4 = 1;
   }
-  else {
+  else if (sensorValues[3] < 700) {
     knop4 = 0;
   }
 
-  if (digitalRead(sensorValues[A4]) > 700) {
+  if (sensorValues[4] > 700) {
     knop5 = 1;
   }
-  else {
+  else if (sensorValues[4] < 700) {
     knop5 = 0;
   }
 
-  if (digitalRead(sensorValues[A5]) > 700) {
+  if (sensorValues[5] > 700) {
     knop6 = 1;
   }
-  else {
+  else if (sensorValues[5] < 700) {
     knop6 = 0;
   }
 
-  if (digitalRead(sensorValues[A6]) > 700) {
+  if (sensorValues[6] > 700) {
     knop7 = 1;
   }
-  else {
+  else if (sensorValues[6] < 700) {
     knop7 = 0;
   }
 
-  if (digitalRead(sensorValues[A7]) > 700) {
+  if (sensorValues[7] > 700) {
     knop8 = 1;
   }
-  else {
+  else if (sensorValues[7] < 700)  {
     knop8 = 0;
   }
 
@@ -173,43 +150,43 @@ void loop() {
     Serial.print('\t');
   }
   Serial.println(position);
-
-  delay(250);
   //END
   //---------------------------------------------------------------------------------------------------------------------------------------------------------
   //Besturen regels
   //Servo controls
-  if (digitalRead(knop) == 1) {
+  if (knop == 1) {
     knopwaarde = 1;
   }
 
-  if (digitalRead(knop2) == 1 && digitalRead(knop) == 0) {
+  if (knop2 == 1 && knop == 0) { 
     knopwaarde = 2;
   }
 
-  if (digitalRead(knop3) == 1 && digitalRead(knop2) == 0 && digitalRead(knop) == 0) {
+  if (knop3 == 1 && knop2 == 0 && knop == 0) {
     knopwaarde = 3;
   }
 
-  if (digitalRead(knop4) == 1 && digitalRead(knop3) == 0 && digitalRead(knop2) == 0 && digitalRead(knop) == 0) {
+  if (knop4 == 1 && knop3 == 0 && knop2 == 0 && knop == 0) {
     knopwaarde = 4;
   }
 
-  if (digitalRead(knop5) == 1 && digitalRead(knop6) == 0 && digitalRead(knop7) == 0 && digitalRead(knop8) == 0)  {
+  if (knop5 == 1 && knop6 == 0 && knop7 == 0 && knop8 == 0)  {
     knopwaarde = 5;
   }
 
-  if (digitalRead(knop6) == 1 && digitalRead(knop7) == 0 && digitalRead(knop8) == 0) {
+  if (knop6 == 1 && knop7 == 0 && knop8 == 0) {
     knopwaarde = 6;
   }
 
-  if (digitalRead(knop7) == 1 && digitalRead(knop8) == 0) {
+  if (knop7 == 1 && knop8 == 0) {
     knopwaarde = 7;
   }
 
-  if (digitalRead(knop8) == 1) {
+  if (knop8 == 1) {
     knopwaarde = 8;
   }
+
+  Serial.print(knopwaarde);
   //-----------------------------------------------------------------------------------------------------------------------------------------
   // Servo verplaatsen
   switch (knopwaarde) {
